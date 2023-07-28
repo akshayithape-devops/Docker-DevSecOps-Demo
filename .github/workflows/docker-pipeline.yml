@@ -25,15 +25,11 @@ jobs:
         password: ${{ secrets.GITHUBTOKEN }}
     
     - name: Install Trivy
-        run: |
-          wget https://github.com/aquasecurity/trivy/releases/download/v0.20.0/trivy_0.20.0_Linux-64bit.tar.gz
-          tar zxvf trivy_0.20.0_Linux-64bit.tar.gz
-          sudo mv trivy /usr/local/bin/
+        run: wget https://github.com/aquasecurity/trivy/releases/download/v0.20.0/trivy_0.20.0_Linux-64bit.tar.gz && tar zxvf trivy_0.20.0_Linux-64bit.tar.gz && sudo mv trivy /usr/local/bin/
     
     - name: Scan Docker image
         id: trivy_scan
-        run: |
-          trivy --exit-code 1 --no-progress --format json --output /github/workspace/trivy_report.json docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+        run: trivy --exit-code 1 --no-progress --format json --output /github/workspace/trivy_report.json docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
 
     - name: Upload scan report
         uses: actions/upload-artifact@v2
