@@ -39,7 +39,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: trivy-report
-        path: trivy_report.json
+        path: report.html
 
     - name: Build Docker image
       run: docker build -t docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} .
