@@ -33,13 +33,13 @@ jobs:
     - name: Scan Docker image
       id: trivy_scan
       run: |
-        trivy --exit-code 1 --no-progress --format json --output /github/workspace/trivy_report.json docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+        trivy --exit-code 1 --no-progress --format json --output trivy_report.json docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
 
     - name: Upload scan report
       uses: actions/upload-artifact@v2
       with:
         name: trivy-report
-        path: /github/workspace/trivy_report.json
+        path: trivy_report.json
 
     - name: Build Docker image
       run: docker build -t docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} .
