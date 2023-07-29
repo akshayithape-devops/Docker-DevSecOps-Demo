@@ -29,7 +29,10 @@ jobs:
         wget https://github.com/aquasecurity/trivy/releases/download/v0.20.0/trivy_0.20.0_Linux-64bit.tar.gz
         tar zxvf trivy_0.20.0_Linux-64bit.tar.gz
         sudo mv trivy /usr/local/bin/
-    
+
+    - name: Build Docker image
+      run: docker build -f dockerfile-single -t docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} .
+        
     - name: Scan Docker image
       id: trivy_scan
       run: |
@@ -40,9 +43,6 @@ jobs:
       with:
         name: trivy-report
         path: report.html
-
-    - name: Build Docker image
-      run: docker build -t docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} .
 
     - name: Push Docker image
       run: docker push docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}

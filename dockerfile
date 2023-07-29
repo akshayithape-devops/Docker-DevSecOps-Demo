@@ -5,7 +5,7 @@ FROM golang:alpine3.17 as builder
 WORKDIR /app
 # Set the working directory for the build stage to /app.
 
-COPY . . 
+COPY hello.go . 
 # Copy the current directory (which contains the application code) to the build stage.
 
 RUN go build hello.go
