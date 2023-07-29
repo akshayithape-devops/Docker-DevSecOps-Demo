@@ -12,7 +12,7 @@ RUN go build hello.go
 # Build the Go application, which produces an executable called "main".
 
 # Deploy Stage
-FROM alpine:latest
+FROM alpine:3.18
 # Use the latest Alpine image as the base image for the deploy stage.
 
 WORKDIR /
